@@ -2091,6 +2091,27 @@ wheels = [
 ]
 
 [[package]]
+name = "real-time-object-tracker"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "opencv-contrib-python" },
+    { name = "opencv-python" },
+    { name = "rfdetr" },
+    { name = "torch" },
+    { name = "trackers" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "opencv-contrib-python", specifier = ">=4.11.0.86" },
+    { name = "opencv-python", specifier = ">=4.11.0.86" },
+    { name = "rfdetr", specifier = ">=1.1.0" },
+    { name = "torch", index = "https://download.pytorch.org/whl/cu126" },
+    { name = "trackers", specifier = ">=2.0.0rc0" },
+]
+
+[[package]]
 name = "regex"
 version = "2024.11.6"
 source = { registry = "https://pypi.org/simple" }
@@ -2585,27 +2606,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ce/63/d310ff2cd46113417d927676ee62eb938d7b08cf6fa5c4a2c350eef572f0/trackers-2.0.0rc0.tar.gz", hash = "sha256:526e4b70583dd29b833efe70c6df202d6bf318bca610e1ff3d32572c73824238", size = 278048 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1f/ef/f51b2d55a77968af32fb0045e35955c3783c8722a86977818efd434b6d2c/trackers-2.0.0rc0-py3-none-any.whl", hash = "sha256:0b0bca538edf5153590073191fd684dffbac8f962d9f4a6f2839833c46cd3667", size = 26172 },
-]
-
-[[package]]
-name = "tracking"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "opencv-contrib-python" },
-    { name = "opencv-python" },
-    { name = "rfdetr" },
-    { name = "torch" },
-    { name = "trackers" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "opencv-contrib-python", specifier = ">=4.11.0.86" },
-    { name = "opencv-python", specifier = ">=4.11.0.86" },
-    { name = "rfdetr", specifier = ">=1.1.0" },
-    { name = "torch", index = "https://download.pytorch.org/whl/cu126" },
-    { name = "trackers", specifier = ">=2.0.0rc0" },
 ]
 
 [[package]]

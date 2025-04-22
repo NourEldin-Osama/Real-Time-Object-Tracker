@@ -1,5 +1,5 @@
 [project]
-name = "tracking"
+name = "Real-Time-Object-Tracker"
 version = "0.1.0"
 description = "Detect and track objects in a stream"
 readme = "README.md"
