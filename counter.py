@@ -1,22 +1,31 @@
 import cv2
+import numpy as np
 import supervision as sv
 from rfdetr import RFDETRBase
 from rfdetr.util.coco_classes import COCO_CLASSES
 from trackers import SORTTracker
 
 RESIZE_OUTPUT = (1530, 780)
+POLYGON = [np.array([[750, 400], [1900, 400], [1900, 750], [750, 750]])]
 
 model = RFDETRBase()
 tracker = SORTTracker()
+zone = sv.PolygonZone(polygon=POLYGON[0])
+
 round_box_annotator = sv.RoundBoxAnnotator()
-label_annotator = sv.LabelAnnotator(text_position=sv.Position.TOP_CENTER)
+label_annotator = sv.LabelAnnotator(text_position=sv.Position.CENTER)
+zone_annotator = sv.PolygonZoneAnnotator(zone=zone, color=sv.Color.BLUE, text_color=sv.Color.WHITE, text_scale=2)
 
 fps_monitor = sv.FPSMonitor()
 
 
 def process_frame(frame, confidence=0.3):
     detections = model.predict(frame, threshold=confidence)
-    detections = detections[detections.class_id == 3]  # Filter for class_id 3 (car)
+    detections = detections[detections.class_id == 1]  # Filter for class_id 1 (person)
+
+    zone_mask = zone.trigger(detections=detections)
+    detections = detections[zone_mask]
+
     detections = tracker.update(detections)
     fps_monitor.tick()
     labels = []
@@ -31,6 +40,7 @@ def process_frame(frame, confidence=0.3):
     annotated_frame = frame.copy()
     annotated_frame = round_box_annotator.annotate(scene=annotated_frame, detections=detections)
     annotated_frame = label_annotator.annotate(scene=annotated_frame, detections=detections, labels=labels)
+    annotated_frame = zone_annotator.annotate(scene=annotated_frame)
 
     fps = fps_monitor.fps
     annotated_frame = sv.draw_text(
@@ -56,7 +66,7 @@ def process_stream(stream=0):
 
 
 def main():
-    stream = "videos/Intersection.mp4"
+    stream = "videos/Counter.mp4"
     process_stream(stream=stream)
 
 
