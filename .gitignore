@@ -11,3 +11,6 @@ wheels/
 videos/
 *.pth
 *.pt
+
+.vscode/
+output/
