@@ -41,23 +41,30 @@ def process_frame(frame, confidence=0.3):
     return annotated_frame
 
 
-def process_stream(stream=0):
-    frame_generator = sv.get_video_frames_generator(stream)
-    for frame_index, frame in enumerate(frame_generator):
-        annotated_frame = process_frame(frame, confidence=0.3)
+def main():
+    source = "videos/walks.mp4"
+    target = "output/walks_annotated.mp4"
+
+    def callback(frame, frame_index):
+        annotated_frame = process_frame(frame, confidence=0.25)
 
         resized_frame = cv2.resize(annotated_frame, RESIZE_OUTPUT)
         cv2.imshow("ZoneVision", resized_frame)
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             print("Exiting...")
-            break
+        return annotated_frame
+
+    sv.process_video(
+        source_path=source,
+        target_path=target,
+        callback=callback,
+        show_progress=True,
+    )
+
     cv2.destroyAllWindows()
 
-
-def main():
-    stream = "videos/walks.mp4"
-    process_stream(stream=stream)
+    print(f"Saved annotated video to {target}")
 
 
 if __name__ == "__main__":

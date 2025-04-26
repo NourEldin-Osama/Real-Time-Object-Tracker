@@ -5,11 +5,12 @@ description = "Detect and track objects in a stream"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "trackers>=2.0.0rc0",
-    "torch",
-    "rfdetr>=1.1.0",
     "opencv-python>=4.11.0.86",
     "opencv-contrib-python>=4.11.0.86",
+    "supervision",
+    "trackers[deepsort]",
+    "rfdetr>=1.1.0",
+    "ultralytics>=8.3.116",
 ]
 
 [tool.uv.sources]
@@ -19,6 +20,7 @@ torch = [
 torchvision = [
     {index = "pytorch-cu126"}
 ]
+trackers = { git = "https://github.com/roboflow/trackers.git" }
 
 [[tool.uv.index]]
 name = "pytorch-cu126"
