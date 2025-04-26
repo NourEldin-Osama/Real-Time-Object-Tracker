@@ -13,4 +13,5 @@ videos/
 *.pt
 
 .vscode/
-output/
+output/*
+!output/walks_annotated.mp4
